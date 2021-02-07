@@ -6,7 +6,7 @@ export interface IHttpMethodRequestSettings {
   config?: AxiosRequestConfig;
 }
 
-export class BaseService {
+export class BaseHttpService {
   private client: AxiosInstance;
 
   constructor(accessToken: string) {
