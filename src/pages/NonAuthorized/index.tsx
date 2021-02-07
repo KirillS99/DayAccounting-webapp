@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom';
 
-import { IPages } from '../../shared/model/Pages';
+import { IPages } from 'shared/types/pages';
+
 import { LoginPage } from './LoginPage/LoginPage';
 
 export const NonAuthorizedPages: IPages = {

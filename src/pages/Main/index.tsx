@@ -1,6 +1,7 @@
 import { Route } from 'react-router-dom';
 
-import { IPages } from '../../shared/model/Pages';
+import { IPages } from 'shared/types/pages';
+
 import OverviewPage from './OverviewPage/OverviewPage';
 
 export const MainPages: IPages = {
