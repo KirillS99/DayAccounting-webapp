@@ -1,49 +1,39 @@
-import axios, { AxiosInstance, AxiosRequestConfig } from 'axios';
+import axios, { AxiosInstance } from 'axios';
+import { AccessTokenManager } from '../../shared/managers/AccessTokenManager';
 
 export interface IHttpMethodRequestSettings {
   url: string;
   data?: unknown;
-  config?: AxiosRequestConfig;
 }
+
+const makeAuthorizationHeaders = (accessTokenManager: AccessTokenManager) => ({
+  Authorization: `Bearer ${accessTokenManager.getAccessToken()}`,
+});
 
 export class BaseHttpService {
   private client: AxiosInstance;
 
-  constructor(accessToken: string) {
-    this.client = axios.create({
-      headers: {
-        Authorization: `Bearer ${accessToken}`,
-      },
-    });
+  constructor(private accessTokenManager: AccessTokenManager) {
+    this.client = axios.create();
   }
 
-  protected get = <Response>({
-    url,
-    data,
-    config,
-  }: IHttpMethodRequestSettings) => {
+  protected get = <Response>({ url, data }: IHttpMethodRequestSettings) => {
     return this.client.get<Response>(url, {
       params: data,
-      ...config,
+      headers: makeAuthorizationHeaders(this.accessTokenManager),
     });
   };
 
-  protected post = <Response>({
-    url,
-    data,
-    config,
-  }: IHttpMethodRequestSettings) => {
-    return this.client.post<Response>(url, data, config);
+  protected post = <Response>({ url, data }: IHttpMethodRequestSettings) => {
+    return this.client.post<Response>(url, data, {
+      headers: makeAuthorizationHeaders(this.accessTokenManager),
+    });
   };
 
-  protected delete = <Response>({
-    url,
-    data,
-    config,
-  }: IHttpMethodRequestSettings) => {
+  protected delete = <Response>({ url, data }: IHttpMethodRequestSettings) => {
     return this.client.delete<Response>(url, {
       params: data,
-      ...config,
+      headers: makeAuthorizationHeaders(this.accessTokenManager),
     });
   };
 }

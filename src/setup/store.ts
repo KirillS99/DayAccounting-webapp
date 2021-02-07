@@ -1,12 +1,28 @@
-import { configureStore } from '@reduxjs/toolkit';
+import {
+  applyMiddleware,
+  combineReducers,
+  compose,
+  createStore,
+  Store,
+} from 'redux';
+import thunk from 'redux-thunk';
 
-export interface IApplicationState {}
+import { IApplicationState, IExtra } from '../shared/types/redux';
 
-export const createApplicationStore = () => {
-  const store = configureStore<IApplicationState>({
-    reducer: {},
-    devTools: process.env.NODE_ENV === 'development',
-  });
+export function configureStore(extra: IExtra): Store<IApplicationState> {
+  const middleware = thunk.withExtraArgument<IExtra>(extra);
+
+  const reducer = combineReducers({});
+
+  const store = createStore(
+    reducer,
+    compose(
+      applyMiddleware(middleware),
+      process.env.NODE_ENV === 'development' &&
+        window.__REDUX_DEVTOOLS_EXTENSION__ &&
+        window.__REDUX_DEVTOOLS_EXTENSION__()
+    )
+  );
 
   return store;
-};
+}

@@ -5,10 +5,14 @@ import { Provider } from 'react-redux';
 
 import './index.css';
 import App from './setup/App';
-import { createApplicationStore } from './setup/store';
+import { configureStore } from './setup/store';
+import { Api } from './services/api/Api';
+import { AccessTokenManager } from './shared/managers/AccessTokenManager';
 
 const bootstrap = () => {
-  const store = createApplicationStore();
+  const accessTokenManager = new AccessTokenManager(localStorage);
+  const api = new Api(accessTokenManager);
+  const store = configureStore({ api });
 
   ReactDOM.render(
     <React.StrictMode>
