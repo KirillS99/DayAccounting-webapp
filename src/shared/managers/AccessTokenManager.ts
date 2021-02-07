@@ -10,4 +10,8 @@ export class AccessTokenManager {
   public setAccessToken(accessToken: string) {
     return this.storage.setItem(ACCESS_TOKEN_ITEM_KEY, accessToken);
   }
+
+  public removeAccessToken() {
+    return this.storage.removeItem(ACCESS_TOKEN_ITEM_KEY);
+  }
 }

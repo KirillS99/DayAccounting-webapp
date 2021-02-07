@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import { Redirect, Switch } from 'react-router-dom';
 
 import { MainPages } from '../pages/Main';
@@ -9,9 +9,9 @@ const mainPages = MainPages.getPages();
 const nonAuthorizedPages = NonAuthorizedPages.getPages();
 
 const App: React.FC = () => {
-  const accessTokenManager = useAccessTokenManager();
+  const { accessToken } = useAccessTokenManager();
 
-  return accessTokenManager.getAccessToken() ? <MainApp /> : <NonAuthorized />;
+  return accessToken ? <MainApp /> : <NonAuthorized />;
 };
 
 const MainApp: React.FC = () => {
