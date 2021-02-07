@@ -1,6 +1,7 @@
 import React from 'react';
 import { Redirect, Switch } from 'react-router-dom';
-import { MainPages } from './pages/Main';
+
+import { MainPages } from '../pages/Main';
 
 const App: React.FC = () => {
   const pages = MainPages.getPages();
