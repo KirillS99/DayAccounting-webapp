@@ -10,11 +10,13 @@ import {
 import thunk from 'redux-thunk';
 
 import * as UsersFeature from 'features/users';
+import * as AuthFeature from 'features/auth';
 
 import { IExtra } from '../shared/types/redux';
 
 export interface IApplicationState {
   users: UsersFeature.types.IUsersState;
+  auth: AuthFeature.types.IAuthState;
 }
 
 export function configureStore(extra: IExtra): Store<IApplicationState> {
@@ -22,6 +24,7 @@ export function configureStore(extra: IExtra): Store<IApplicationState> {
 
   const reducer: Reducer<IApplicationState, AnyAction> = combineReducers({
     users: UsersFeature.reducer,
+    auth: AuthFeature.reducer,
   });
 
   const store = createStore(
