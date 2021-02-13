@@ -1,6 +1,7 @@
 import { createAction } from 'typesafe-actions';
 
 import { IUser } from 'shared/models/User';
+import { AppError } from 'shared/types/error';
 
 export const loadCurrentUserSuccess = createAction(
   '@users/LOAD_CURRENT_USER_SUCCESS'
@@ -12,4 +13,4 @@ export const loadCurrentUserRequest = createAction(
 
 export const loadCurrentUserError = createAction(
   '@users/LOAD_CURRENT_USER_ERROR'
-)<Error>();
+)<AppError>();
