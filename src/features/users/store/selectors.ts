@@ -1,4 +1,4 @@
-import { IApplicationState } from 'shared/types/redux';
+import { IApplicationState } from '../../../setup/store';
 
 export const selectCurrentUser = (state: IApplicationState) =>
   state.users.data.currentUser;

@@ -1,6 +1,7 @@
+import React from 'react';
 import { Route } from 'react-router-dom';
 
-import { IPages } from 'shared/types/pages';
+import { IPages } from 'shared/models/Pages';
 
 import OverviewPage from './OverviewPage/OverviewPage';
 
