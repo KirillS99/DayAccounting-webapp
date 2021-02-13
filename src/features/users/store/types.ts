@@ -1,6 +1,10 @@
+import { ICommunication } from 'shared/models/Communication';
 import { IUser } from 'shared/models/User';
-import { ICommunication } from 'shared/types/communication';
-
 export interface IUsersState {
-  currentUserCommunication: ICommunication<IUser>;
+  communications: {
+    loadingCurrentUser: ICommunication;
+  };
+  data: {
+    currentUser: IUser | null;
+  };
 }

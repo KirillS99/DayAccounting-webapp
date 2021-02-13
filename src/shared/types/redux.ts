@@ -1,5 +1,5 @@
 import { AnyAction } from 'redux';
-import { ThunkAction } from 'redux-thunk';
+import { ThunkAction, ThunkDispatch } from 'redux-thunk';
 import { Action } from 'typesafe-actions';
 
 import { IUsersState } from 'features/users/store/types';
@@ -20,3 +20,9 @@ export type ThunkResult<R = void, A extends Action = AnyAction> = ThunkAction<
   IExtra,
   A
 >;
+
+export interface IThunkDeps {
+  dispatch: ThunkDispatch<IApplicationState, IExtra, AnyAction>;
+  getState: () => IApplicationState;
+  extra: IExtra;
+}
