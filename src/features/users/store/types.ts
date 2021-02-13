@@ -1,4 +1,4 @@
-import { ICommunication } from 'shared/models/Communication';
+import { ICommunication } from 'shared/models/Communication/Communication';
 import { IUser } from 'shared/models/User';
 export interface IUsersState {
   communications: {

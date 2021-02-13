@@ -1,4 +1,4 @@
-import { AppError } from './AppError';
+import { AppError } from '../AppError';
 
 export interface ICommunication {
   isLoading: boolean;

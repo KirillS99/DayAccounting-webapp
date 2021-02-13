@@ -1,4 +1,4 @@
-import { makeCommunicationActionCreator } from 'shared/utils/communication/makeCommunicationActionCreator';
+import { makeCommunicationActionCreator } from 'shared/utils/communication/actions/makeCommunicationActionCreator';
 
 export const loadCurrentUser = makeCommunicationActionCreator({
   loading: '@users/LOAD_CURRENT_USER_LOADING',

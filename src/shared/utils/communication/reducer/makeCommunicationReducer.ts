@@ -4,9 +4,9 @@ import { getType } from 'typesafe-actions';
 import {
   ICommunication,
   initialCommunication,
-} from 'shared/models/Communication';
+} from 'shared/models/Communication/Communication';
 
-import { ICommunicationActions } from './makeCommunicationActions';
+import { ICommunicationActions } from '../actions/makeCommunicationActions';
 
 export const makeCommunicationReducer = <
   L extends string,
@@ -24,21 +24,18 @@ export const makeCommunicationReducer = <
     switch (action.type) {
       case getType(actions.loading):
         return {
-          ...state,
           isLoading: true,
           error: undefined,
           isSuccess: false,
         };
       case getType(actions.success):
         return {
-          ...state,
           isLoading: false,
           isSuccess: true,
           error: undefined,
         };
       case getType(actions.error):
         return {
-          ...state,
           isLoading: false,
           isSuccess: false,
           error: action.payload,

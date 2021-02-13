@@ -1,18 +1,8 @@
-import { IThunkDeps, ThunkResult } from 'shared/types/redux';
+import { ThunkResult } from 'shared/types/redux';
 
-import {
-  makeCommunicationActions,
-  ICommunicationActionTypes,
-} from './makeCommunicationActions';
-
-interface ICommunicateFuncArgs<Payload> {
-  payload: Payload;
-  deps: IThunkDeps;
-}
-
-type CommunicateFunc<Payload, Data> = (
-  args: ICommunicateFuncArgs<Payload>
-) => Promise<Data>;
+import { ICommunicationActionTypes } from './communicationActionTypes';
+import { makeCommunicationActions } from './makeCommunicationActions';
+import { CommunicateFunc } from '../shared';
 
 export const makeCommunicationActionCreator = <
   L extends string,

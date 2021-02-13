@@ -6,18 +6,7 @@ import {
 
 import { AppError } from 'shared/models/AppError';
 
-export interface ICommunicationActionTypes<
-  LoadingType extends string,
-  SuccessType extends string,
-  ErrorType extends string,
-  ResetType extends string
-> {
-  loading: LoadingType;
-  success: SuccessType;
-  error: ErrorType;
-  reset: ResetType;
-}
-
+import { ICommunicationActionTypes } from './communicationActionTypes';
 export interface ICommunicationActions<
   L extends string,
   S extends string,
