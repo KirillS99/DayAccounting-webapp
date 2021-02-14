@@ -13,7 +13,8 @@ export const makeCommunicationActionCreator = <
   actionTypes: ICommunicationActionTypes<L, S, E, R>
 ) => <Payload, Data>(communicate: CommunicateFunc<Payload, Data>) => {
   const actions = makeCommunicationActions<L, S, E, R, Data>(actionTypes);
-  const actionCreator = (payload: Payload): ThunkResult => (
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  const actionCreator = (payload: Payload = {} as any): ThunkResult => (
     dispatch,
     getState,
     extra

@@ -1,3 +1,4 @@
+import Auth from 'features/auth/view/Auth/Auth';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
@@ -14,5 +15,9 @@ export const LoginPage: React.FC = () => {
     }
   }, [accessToken, accessTokenManager]);
 
-  return <div>LoginPage</div>;
+  return (
+    <div>
+      <Auth />
+    </div>
+  );
 };
