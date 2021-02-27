@@ -5,7 +5,7 @@ module.exports = function (app) {
   app.use(
     '/api',
     createProxyMiddleware({
-      target: 'http://day-accounting.herokuapp.com',
+      target: 'http://localhost:3000',
       changeOrigin: true,
     })
   );

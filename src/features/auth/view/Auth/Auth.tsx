@@ -34,12 +34,7 @@ const Auth: React.FC<IProps> = ({ authenticatingByGoogle, loginByGoogle }) => {
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <AuthButton
-          label="Login by Google"
-          onClick={loginByGoogle}
-          isLoading={authenticatingByGoogle.isLoading}
-          icon={icon}
-        />
+        <a href="localhost:3001/api/google">Google</a>
       </div>
     </div>
   );
