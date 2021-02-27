@@ -2,7 +2,9 @@ import Auth from 'features/auth/view/Auth/Auth';
 import React, { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 
-import { useAccessTokenManager } from '../../../shared/hooks/useAccessTokenManager';
+import { useAccessTokenManager } from 'shared/hooks/useAccessTokenManager';
+
+import NonAuthorizedLayout from '../shared/NonAuthorizedLayout/NonAuthorizedLayout';
 
 export const LoginPage: React.FC = () => {
   const { accessToken } = useParams<{ accessToken?: string }>();
@@ -16,8 +18,8 @@ export const LoginPage: React.FC = () => {
   }, [accessToken, accessTokenManager]);
 
   return (
-    <div>
+    <NonAuthorizedLayout>
       <Auth />
-    </div>
+    </NonAuthorizedLayout>
   );
 };

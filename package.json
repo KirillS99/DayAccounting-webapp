@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "dependencies": {
+    "@material-ui/core": "^4.11.3",
     "@testing-library/jest-dom": "^5.11.4",
     "@testing-library/react": "^11.1.0",
     "@testing-library/user-event": "^12.1.10",
@@ -54,7 +55,7 @@
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.20.0",
-    "eslint-plugin-react": "^7.22.0"
-  },
-  "proxy": "https://day-accounting.herokuapp.com"
+    "eslint-plugin-react": "^7.22.0",
+    "http-proxy-middleware": "^1.0.6"
+  }
 }

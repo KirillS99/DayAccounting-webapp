@@ -1,5 +1,10 @@
 import React from 'react';
+
+import { Button } from '@material-ui/core';
+
 import Spinner from 'shared/view/elements/Spinner/Spinner';
+
+import styles from './AuthButton.module.css';
 
 interface ILocalProps {
   label: string;
@@ -15,10 +20,18 @@ const AuthButton: React.FC<ILocalProps> = ({
   isLoading,
 }) => {
   return (
-    <a onClick={onClick}>
-      <span>{isLoading ? <Spinner /> : icon}</span>
+    <Button
+      className={styles.root}
+      disabled={isLoading}
+      onClick={onClick}
+      startIcon={isLoading ? <Spinner /> : icon}
+      classes={{
+        startIcon: styles.icon,
+      }}
+      color="primary"
+    >
       {label}
-    </a>
+    </Button>
   );
 };
 

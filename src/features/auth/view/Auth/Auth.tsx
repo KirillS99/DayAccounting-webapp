@@ -7,6 +7,7 @@ import { selectAuthenticatingByGoogle } from 'features/auth/store/selectors';
 import { IApplicationState } from 'setup/store';
 
 import AuthButton from './AuthButton/AuthButton';
+import styles from './Auth.module.css';
 
 const mapStateToProps = (state: IApplicationState) => {
   return {
@@ -31,13 +32,13 @@ type IProps = ILocalProps &
 
 const Auth: React.FC<IProps> = ({ authenticatingByGoogle, loginByGoogle }) => {
   return (
-    <div>
-      <div>
+    <div className={styles.root}>
+      <div className={styles.content}>
         <AuthButton
           label="Login by Google"
           onClick={loginByGoogle}
           isLoading={authenticatingByGoogle.isLoading}
-          icon={'asfd'}
+          icon={icon}
         />
       </div>
     </div>
