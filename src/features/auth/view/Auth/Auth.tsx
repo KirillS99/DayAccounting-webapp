@@ -34,7 +34,7 @@ const Auth: React.FC<IProps> = ({ authenticatingByGoogle, loginByGoogle }) => {
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <a href="localhost:3001/api/google">Google</a>
+        <a href="https://day-accounting.herokuapp.com/api/google">Google</a>
       </div>
     </div>
   );
