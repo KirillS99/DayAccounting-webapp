@@ -35,7 +35,7 @@ const Auth: React.FC<IProps> = ({ authenticatingByGoogle, loginByGoogle }) => {
     <div className={styles.root}>
       <div className={styles.content}>
         <a
-          href={`http://localhost:3000/api/google?authRedirect=${location.origin}`}
+          href={`https://day-accounting.herokuapp.com/api/google?authRedirect=${location.origin}`}
         >
           Google
         </a>
