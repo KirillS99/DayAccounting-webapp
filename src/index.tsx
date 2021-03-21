@@ -8,10 +8,11 @@ import App from './setup/App';
 import { configureStore } from './setup/store';
 import { Api } from './services/api/Api';
 import { AccessTokenManager } from './shared/managers/AccessTokenManager';
+import { baseUrl } from 'shared/settings/baseUrl';
 
 const bootstrap = () => {
   const accessTokenManager = new AccessTokenManager(localStorage);
-  const api = new Api(accessTokenManager);
+  const api = new Api(accessTokenManager, baseUrl);
   const store = configureStore({ api });
 
   ReactDOM.render(

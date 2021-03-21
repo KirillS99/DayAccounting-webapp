@@ -8,14 +8,18 @@ import {
   UpdatedReport,
 } from 'shared/models/Report';
 import { convertReport, convertReports } from './ReportsConverter';
+import { AccessTokenManager } from 'shared/managers/AccessTokenManager';
 
 export class ReportsService extends BaseHttpService {
+  constructor(accessTokenManager: AccessTokenManager, baseUrl: string) {
+    super(accessTokenManager, baseUrl);
+  }
   public async getReportsByDay({
     timestampStart,
     timestampEnd,
   }: ITimestampDuration): Promise<IReport[]> {
     const reports = await this.get<IServerReportsList>({
-      url: `/api/reports/get-reports?timestampStart=${timestampStart}&timestampEnd=${timestampEnd}`,
+      url: `${this.baseUrl}/api/reports/get-reports?timestampStart=${timestampStart}&timestampEnd=${timestampEnd}`,
     });
     return convertReports(reports.data);
   }

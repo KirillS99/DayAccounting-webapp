@@ -1,4 +1,5 @@
 import { AccessTokenManager } from 'shared/managers/AccessTokenManager';
+import { baseUrl } from 'shared/settings/baseUrl';
 
 import { AuthService } from './auth/AuthService';
 import { ReportsService } from './reports/ReportsService';
@@ -9,9 +10,9 @@ export class Api {
   public auth: AuthService;
   public reports: ReportsService;
 
-  constructor(accessTokenManager: AccessTokenManager) {
-    this.users = new UsersService(accessTokenManager);
-    this.auth = new AuthService(accessTokenManager);
-    this.reports = new ReportsService(accessTokenManager);
+  constructor(accessTokenManager: AccessTokenManager, baseUrl: string) {
+    this.users = new UsersService(accessTokenManager, baseUrl);
+    this.auth = new AuthService(accessTokenManager, baseUrl);
+    this.reports = new ReportsService(accessTokenManager, baseUrl);
   }
 }

@@ -23,7 +23,10 @@ class ResponseErrorInterceptor {
 }
 
 export class BaseHttpService {
-  constructor(private accessTokenManager: AccessTokenManager) {
+  constructor(
+    private accessTokenManager: AccessTokenManager,
+    public baseUrl: string
+  ) {
     axios.defaults.responseType = 'json';
     axios.defaults.timeout = 30000;
     axios.defaults.validateStatus = (status) =>
@@ -32,6 +35,7 @@ export class BaseHttpService {
       undefined,
       new ResponseErrorInterceptor(this.accessTokenManager).intercept
     );
+    this.baseUrl = baseUrl;
   }
 
   public static addErrorInterceptor = (
