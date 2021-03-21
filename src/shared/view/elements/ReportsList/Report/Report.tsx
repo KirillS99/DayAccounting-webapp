@@ -70,9 +70,10 @@ const Report: React.FC<ItemProps> = ({
         })
       );
       setOpenedCreateEditing(false);
+    } else {
+      dispatch(updateReport({ id: item.id, text: mdValue || '', totalTime }));
+      setOpenedEditing(false);
     }
-    dispatch(updateReport({ id: item.id, text: mdValue || '', totalTime }));
-    setOpenedEditing(false);
   }, [
     mdValue,
     timeDuration,
