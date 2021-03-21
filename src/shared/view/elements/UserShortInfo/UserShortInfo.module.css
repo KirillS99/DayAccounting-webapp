@@ -1,0 +1,21 @@
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.picture {
+  border-radius: 50%;
+  width: 2rem;
+  margin-right: 1rem;
+}
+
+.email {
+  font-size: 0.8rem;
+  color: #2a5885;
+  margin-bottom: 3px;
+}
+
+.reportCreatedAt {
+  font-size: 0.7rem;
+  color: #939393;
+}

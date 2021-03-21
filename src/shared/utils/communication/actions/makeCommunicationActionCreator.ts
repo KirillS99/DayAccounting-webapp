@@ -14,22 +14,25 @@ export const makeCommunicationActionCreator = <
 ) => <Payload, Data>(communicate: CommunicateFunc<Payload, Data>) => {
   const actions = makeCommunicationActions<L, S, E, R, Data>(actionTypes);
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  const actionCreator = (payload: Payload = {} as any): ThunkResult => (
+  const actionCreator = (payload: Payload = {} as any): ThunkResult => async (
     dispatch,
     getState,
     extra
   ) => {
-    dispatch(actions.loading);
-    communicate({
-      payload,
-      deps: {
-        dispatch,
-        getState,
-        extra,
-      },
-    })
-      .then((data) => dispatch(actions.success(data)))
-      .catch((error) => dispatch(actions.error(error)));
+    try {
+      dispatch(actions.loading);
+      const data = await communicate({
+        payload,
+        deps: {
+          dispatch,
+          getState,
+          extra,
+        },
+      });
+      dispatch(actions.success(data));
+    } catch (e) {
+      dispatch(actions.error(e));
+    }
   };
 
   actionCreator.success = actions.success;

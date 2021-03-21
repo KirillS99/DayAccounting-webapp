@@ -1,0 +1,39 @@
+.root {
+  background: #eee;
+  border-right: 1px solid #ddd;
+  width: 100%;
+  text-align: center;
+  cursor: pointer;
+}
+
+.root:first-child {
+  border-left: 1px solid #ddd;
+}
+
+.activeRoot {
+  box-shadow: 0 0 0 2px rgb(224, 35, 78), 0 0 10px rgb(224, 35, 78);
+  border-right: 2px solid transparent !important;
+  z-index: 1;
+}
+
+.top {
+  background: #fff;
+  color: #999;
+  font-size: 0.625rem;
+}
+.bottom {
+  height: 1.875rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #4172ac;
+  font-size: 0.8125rem;
+}
+
+.weekend > div {
+  color: #ff0000 !important;
+}
+
+.isLastOfWeekend {
+  border-right: 2px solid #aaa;
+}

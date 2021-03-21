@@ -1,4 +1,4 @@
-import axios, { AxiosError, AxiosInstance } from 'axios';
+import axios, { AxiosError, AxiosInstance, AxiosResponse } from 'axios';
 import { AccessTokenManager } from '../../shared/managers/AccessTokenManager';
 
 export interface IHttpMethodRequestSettings {
@@ -7,51 +7,54 @@ export interface IHttpMethodRequestSettings {
 }
 
 const makeAuthorizationHeaders = (accessTokenManager: AccessTokenManager) => ({
-  Authorization: `Bearer ${accessTokenManager.getAccessToken()}`,
+  Authorization: `${accessTokenManager.getAccessToken()}`,
 });
 
 class ResponseErrorInterceptor {
   constructor(private accessTokenManager: AccessTokenManager) {}
 
   public intercept = (error: AxiosError): AxiosError => {
-    if (error.code === '401') {
+    if (error.code === '401' || error.code === '403') {
       this.accessTokenManager.removeAccessToken();
     }
 
-    return error;
+    throw error;
   };
 }
 
 export class BaseHttpService {
-  private client: AxiosInstance;
-
   constructor(private accessTokenManager: AccessTokenManager) {
-    this.client = axios.create();
-    this.client.defaults.responseType = 'json';
-    this.client.defaults.timeout = 30000;
-    this.client.defaults.validateStatus = (status) =>
+    axios.defaults.responseType = 'json';
+    axios.defaults.timeout = 30000;
+    axios.defaults.validateStatus = (status) =>
       (status >= 200 && status < 300) || status === 302;
-    this.client.interceptors.response.use(
+    axios.interceptors.response.use(
       undefined,
       new ResponseErrorInterceptor(this.accessTokenManager).intercept
     );
   }
 
+  public static addErrorInterceptor = (
+    interceptor: (error: AxiosError<unknown>) => void
+  ) => {
+    axios.interceptors.response.use(undefined, interceptor);
+  };
+
   protected get = <Response>({ url, data }: IHttpMethodRequestSettings) => {
-    return this.client.get<Response>(url, {
+    return axios.get<Response>(url, {
       params: data,
       headers: makeAuthorizationHeaders(this.accessTokenManager),
     });
   };
 
   protected post = <Response>({ url, data }: IHttpMethodRequestSettings) => {
-    return this.client.post<Response>(url, data, {
+    return axios.post<Response>(url, data, {
       headers: makeAuthorizationHeaders(this.accessTokenManager),
     });
   };
 
   protected delete = <Response>({ url, data }: IHttpMethodRequestSettings) => {
-    return this.client.delete<Response>(url, {
+    return axios.delete<Response>(url, {
       params: data,
       headers: makeAuthorizationHeaders(this.accessTokenManager),
     });

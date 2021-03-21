@@ -4,4 +4,7 @@ export interface IAuthState {
   communications: {
     authenticatingByGoogle: ICommunication;
   };
+  data: {
+    accessToken: string;
+  };
 }

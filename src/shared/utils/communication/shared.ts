@@ -14,11 +14,8 @@ export interface ICommunicationByIdPayload {
   id: string;
 }
 
-export type ICommunicationByIdSuccessPayload<Data> = Data extends undefined
-  ? {
-      data: Data;
-    } & ICommunicationByIdPayload
-  : ICommunicationByIdPayload;
+export type ICommunicationByIdSuccessPayload<Data> = Data &
+  ICommunicationByIdPayload;
 
 export interface ICommunicationByIdErrorPayload
   extends ICommunicationByIdPayload {

@@ -8,8 +8,12 @@ import { LoginPage } from './LoginPage/LoginPage';
 export const NonAuthorizedPages: IPages = {
   getPages() {
     return [
-      <Route key="login" path="/login" component={LoginPage} />,
-      <Route key="login" path="/login/:accessToken" component={LoginPage} />,
+      <Route key="login" exact path="/login" component={LoginPage} />,
+      <Route
+        key="login/:accessToken"
+        path="/login/:accessToken"
+        component={LoginPage}
+      />,
     ];
   },
 };

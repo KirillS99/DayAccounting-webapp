@@ -14,8 +14,11 @@
     "@types/react-redux": "^7.1.16",
     "@types/react-router-dom": "^5.1.7",
     "@types/redux": "^3.6.0",
+    "@uiw/react-md-editor": "^3.0.0-beta.1",
     "axios": "^0.21.1",
+    "classnames": "^2.2.6",
     "cross-env": "^7.0.3",
+    "dayjs": "^1.10.4",
     "normalize.css": "^8.0.1",
     "react": "^17.0.1",
     "react-dom": "^17.0.1",
@@ -52,10 +55,12 @@
     ]
   },
   "devDependencies": {
+    "@types/classnames": "^2.2.11",
     "@typescript-eslint/eslint-plugin": "^4.15.0",
     "@typescript-eslint/parser": "^4.15.0",
     "eslint": "^7.20.0",
     "eslint-plugin-react": "^7.22.0",
+    "eslint-plugin-react-hooks": "2.3.0",
     "http-proxy-middleware": "^1.0.6"
   }
 }

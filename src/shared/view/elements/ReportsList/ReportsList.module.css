@@ -1,0 +1,9 @@
+.root {
+  display: flex;
+  justify-content: center;
+}
+
+.list {
+  max-width: 90%;
+  min-width: 70%;
+}

@@ -1,0 +1,15 @@
+.root {
+  flex-grow: 1;
+  display: flex;
+  align-items: center;
+  justify-content: space-around;
+  padding: 0 3.125rem;
+}
+
+.indicator {
+  position: absolute;
+  top: calc(100% - 10px);
+  height: 4px;
+  background: #ea2845;
+  transition: 0.25s;
+}

@@ -18,7 +18,7 @@ export const makeCommunicationByIdActionCreator = <
   actionTypes: ICommunicationActionTypes<L, S, E, R>
 ) => <LoadingPayload extends ICommunicationByIdPayload, Data>(
   communicate: CommunicateFunc<
-    ICommunicationByIdPayload,
+    LoadingPayload,
     ICommunicationByIdSuccessPayload<Data>
   >
 ) => {

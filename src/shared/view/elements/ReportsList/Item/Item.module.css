@@ -1,0 +1,35 @@
+.root {
+  background: #fff;
+  margin-bottom: 2rem;
+  padding: 1.5rem;
+  border-radius: 0.625rem;
+}
+
+.userInfo {
+}
+
+.body {
+  margin-top: 1rem;
+}
+
+.tasksTitle,
+.totalTimeTitle {
+  font-size: 0.9rem;
+  color: #939393;
+  margin-bottom: 3px;
+}
+
+.tasksBody {
+  font-size: 0.9rem;
+}
+
+.bottom {
+  margin-top: 2.5rem;
+  display: flex;
+  justify-content: space-between;
+}
+
+.buttonContainer {
+  display: flex;
+  align-items: center;
+}
