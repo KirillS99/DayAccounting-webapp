@@ -26,7 +26,7 @@ export class ReportsService extends BaseHttpService {
 
   public async updateReport(data: UpdatedReport): Promise<IReport> {
     const report = await this.post<IServerUpdatedReport>({
-      url: `/api/reports/update/${data.id}`,
+      url: `${this.baseUrl}/api/reports/update/${data.id}`,
       data,
     });
     return convertReport(report.data.report);
