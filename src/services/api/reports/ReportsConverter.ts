@@ -1,3 +1,4 @@
+import dayjs from 'dayjs';
 import {
   IReport,
   IServerReport,
@@ -7,7 +8,9 @@ import {
 import { convertUser } from '../users/UsersConverter';
 
 export const convertReports = (data: IServerReportsList): IReport[] => {
-  return data.reports.map(convertReport);
+  return data.reports
+    .map(convertReport)
+    .sort((a, b) => (dayjs(a.createdAt).isBefore(b.createdAt) ? 1 : -1));
 };
 
 export const convertReport = (data: IServerReport) => ({
