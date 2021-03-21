@@ -4,7 +4,7 @@ import 'dayjs/locale/ru';
 import { shallowEqual, useSelector } from 'react-redux';
 
 import styles from './ReportsList.module.css';
-import Item from './Item/Item';
+import Report from './Report/Report';
 import { selectReports } from 'features/reports/store/selectors';
 import { IApplicationState } from 'setup/store';
 import { IReport } from 'shared/models/Report';
@@ -18,7 +18,7 @@ const ReportsList: React.FC = () => {
   );
 
   const reports = useMemo(
-    () => reportsListArray.map((t: IReport) => <Item key={t.id} item={t} />),
+    () => reportsListArray.map((t: IReport) => <Report key={t.id} item={t} />),
     [reportsListArray]
   );
 

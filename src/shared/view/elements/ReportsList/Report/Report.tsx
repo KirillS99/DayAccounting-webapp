@@ -1,4 +1,4 @@
-import React, { useCallback, useState } from 'react';
+import React, { useCallback, useEffect, useState } from 'react';
 import 'dayjs/locale/ru';
 import cn from 'classnames';
 import duration from 'dayjs/plugin/duration';
@@ -6,7 +6,7 @@ dayjs.extend(duration);
 import MDEditor from '@uiw/react-md-editor';
 import { Button, TextField } from '@material-ui/core';
 
-import styles from './Item.module.css';
+import styles from './Report.module.css';
 import { IReport } from 'shared/models/Report';
 import dayjs from 'dayjs';
 import UserShortInfo from '../../UserShortInfo/UserShortInfo';
@@ -14,32 +14,43 @@ import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentUser } from 'features/users/store/selectors';
 import { IApplicationState } from 'setup/store';
 import { IUser } from 'shared/models/User';
-import { updateReport } from 'features/reports/store/actions';
+import { createReport, updateReport } from 'features/reports/store/actions';
 import { convertHsAndMsToSeconds } from 'shared/helpers/convertHoursAndMinutesToSeconds';
 import { selectUpdatingReport } from 'features/reports/store/selectors';
 
 interface ItemProps {
   item: IReport;
+  isCreate?: boolean;
+  setOpenedCreateEditing?: (a: boolean) => void;
+  activeDayValue?: number;
 }
 
-const Item: React.FC<ItemProps> = ({ item }) => {
+const Report: React.FC<ItemProps> = ({
+  item,
+  isCreate = false,
+  setOpenedCreateEditing,
+  activeDayValue,
+}) => {
   const currentUser = useSelector((state: IApplicationState) =>
     selectCurrentUser(state)
   );
   const dispatch = useDispatch();
-  const [isOpenEditing, setOpenedEditing] = useState<boolean>(false);
+  const [isOpenEditing, setOpenedEditing] = useState<boolean>(isCreate);
   const [mdValue, mdSetValue] = useState<string | undefined>('');
-  const [timeDuration, setTimeDuration] = useState<string>('');
+  const totalTime = dayjs.duration(item.totalTime * 1000).format('HH:mm');
+
+  const [timeDuration, setTimeDuration] = useState<string>(totalTime);
 
   const updatingReport = useSelector(selectUpdatingReport(item.id));
 
-  const totalTime = dayjs.duration(item.totalTime * 1000).format('HH:mm');
-
   const onChangeButtonClick = useCallback(() => {
     mdSetValue(item.text);
-    setTimeDuration(totalTime);
-    setOpenedEditing((prevState) => !prevState);
-  }, [item.text, totalTime]);
+    if (isCreate && setOpenedCreateEditing) {
+      setOpenedCreateEditing(false);
+    } else {
+      setOpenedEditing((prevState) => !prevState);
+    }
+  }, [item.text, isCreate, setOpenedCreateEditing]);
 
   const onChangeTimeDuration = useCallback((e) => {
     setTimeDuration(e.currentTarget.value);
@@ -47,9 +58,31 @@ const Item: React.FC<ItemProps> = ({ item }) => {
 
   const onSaveButtonClick = useCallback(() => {
     const totalTime = convertHsAndMsToSeconds(timeDuration);
+    if (isCreate && setOpenedCreateEditing) {
+      dispatch(
+        createReport({
+          user: currentUser,
+          text: mdValue || '',
+          totalTime,
+          createdAt: dayjs()
+            .date(activeDayValue || 0)
+            .format('YYYY/MM/DD'),
+        })
+      );
+      setOpenedCreateEditing(false);
+    }
     dispatch(updateReport({ id: item.id, text: mdValue || '', totalTime }));
     setOpenedEditing(false);
-  }, [mdValue, timeDuration, item.id, dispatch]);
+  }, [
+    mdValue,
+    timeDuration,
+    item.id,
+    dispatch,
+    activeDayValue,
+    isCreate,
+    currentUser,
+    setOpenedCreateEditing,
+  ]);
 
   return (
     <div className={styles.root}>
@@ -89,7 +122,7 @@ const Item: React.FC<ItemProps> = ({ item }) => {
               )}
             </div>
           </div>
-          {currentUser?.id === item.user.id && (
+          {currentUser?.id === (item.user?.id ?? 0) && (
             <div className={styles.buttonContainer}>
               {!isOpenEditing ? (
                 <Button onClick={onChangeButtonClick} color="primary">
@@ -115,4 +148,4 @@ const Item: React.FC<ItemProps> = ({ item }) => {
   );
 };
 
-export default Item;
+export default Report;

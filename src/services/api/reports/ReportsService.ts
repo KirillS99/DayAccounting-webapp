@@ -1,6 +1,7 @@
 import { BaseHttpService } from '../BaseHttpService';
 import {
   IReport,
+  IServerCreateReportDto,
   IServerReport,
   IServerReportsList,
   IServerUpdatedReport,
@@ -14,6 +15,14 @@ export class ReportsService extends BaseHttpService {
   constructor(accessTokenManager: AccessTokenManager, baseUrl: string) {
     super(accessTokenManager, baseUrl);
   }
+  public async createReport(data: IServerCreateReportDto): Promise<IReport> {
+    const reports = await this.post<IServerUpdatedReport>({
+      url: `${this.baseUrl}/api/reports/create`,
+      data,
+    });
+    return convertReport({ ...reports.data.report, user: data.user });
+  }
+
   public async getReportsByDay({
     timestampStart,
     timestampEnd,

@@ -20,4 +20,8 @@ export default createReducer<IReportsState['data'], ActionType<typeof actions>>(
     reportsList: state.reportsList.map((t: IReport) =>
       t.id === action.payload.id ? { ...action.payload, user: t.user } : t
     ),
+  }))
+  .handleAction(actions.createReport.success, (state, action) => ({
+    ...state,
+    reportsList: [action.payload, ...state.reportsList],
   }));
