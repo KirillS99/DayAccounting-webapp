@@ -100,7 +100,7 @@ const Report: React.FC<ItemProps> = ({
   return (
     <div className={styles.root}>
       <div className={styles.userInfo}>
-        <UserShortInfo user={item.user} reportCreatedAt={item.createdAt} />
+        <UserShortInfo user={item.user} reportCreatedAt={item.updatedAt} />
       </div>
       <div className={styles.body}>
         <div className={styles.tasks}>

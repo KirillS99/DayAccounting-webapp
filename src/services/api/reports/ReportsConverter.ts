@@ -26,6 +26,7 @@ export const convertCreateReport = ({
 }: ICreateReportConverter): IReport => ({
   id: report.id.toString(),
   createdAt: report.created_at,
+  updatedAt: report.updated_at,
   text: report.text,
   totalTime: report.total_time,
   user: convertUser(user),
@@ -34,6 +35,7 @@ export const convertCreateReport = ({
 export const convertReport = (data: IServerReport) => ({
   id: data.id.toString(),
   createdAt: data.created_at,
+  updatedAt: data.updated_at,
   text: data.text,
   totalTime: data.total_time,
   user: convertUser(data.user),

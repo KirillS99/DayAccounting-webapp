@@ -3,6 +3,7 @@ import { IServerUser, IUser } from './User';
 export interface IReport {
   id: string;
   createdAt: Date | string;
+  updatedAt: Date | string;
   text: string;
   totalTime: number;
   user: IUser;
@@ -31,6 +32,7 @@ export type UpdatedReport = Pick<
 export interface IServerReport {
   id: number | string;
   created_at: Date;
+  updated_at: Date;
   text: string;
   total_time: number;
   user: IServerUser;
@@ -42,6 +44,7 @@ export interface IReportDate {
 
 export interface ICreateReport {
   id: number | string;
+  updated_at: Date | string;
   created_at: Date;
   text: string;
   total_time: number;

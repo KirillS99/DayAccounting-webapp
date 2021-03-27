@@ -45,6 +45,7 @@ const CreatingReport: React.FC<CreatingReportProps> = ({ activeDayValue }) => {
             text: '',
             totalTime: 300,
             createdAt: new Date(),
+            updatedAt: dayjs().toISOString(),
           }}
           setOpenedCreateEditing={setOpenedEditing}
           isCreate
