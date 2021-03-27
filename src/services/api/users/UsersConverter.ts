@@ -1,5 +1,8 @@
-import { IUser } from 'shared/models/User';
+import { IUser, IServerUser } from 'shared/models/User';
 
-export const convertUser = (data: IUser | null): IUser | null => {
-  return data;
+export const convertUser = (data: IServerUser): IUser => {
+  return {
+    ...data,
+    id: data.id.toString(),
+  };
 };

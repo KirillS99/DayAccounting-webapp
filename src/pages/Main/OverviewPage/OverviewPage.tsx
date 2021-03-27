@@ -13,8 +13,8 @@ const OverviewPage: React.FC = () => {
 
   useEffect(() => {
     const activeDay = dayjs().date(activeDayValue).format('YYYY-MM-DD');
-    const timestamp = getTimestampByDay(activeDay);
-    dispatch(loadReportsByDay(timestamp));
+    // const timestamp = getTimestampByDay(activeDay);
+    dispatch(loadReportsByDay(activeDay));
   }, [activeDayValue, dispatch]);
 
   return (
@@ -24,7 +24,7 @@ const OverviewPage: React.FC = () => {
         setActiveDayValue={setActiveDayValue}
       />
       <CreatingReport activeDayValue={activeDayValue} />
-      <ReportsList />
+      <ReportsList activeDayValue={activeDayValue} />
     </div>
   );
 };

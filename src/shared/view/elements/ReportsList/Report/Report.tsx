@@ -11,7 +11,10 @@ import { IReport } from 'shared/models/Report';
 import dayjs from 'dayjs';
 import UserShortInfo from '../../UserShortInfo/UserShortInfo';
 import { useDispatch, useSelector } from 'react-redux';
-import { selectCurrentUser } from 'features/users/store/selectors';
+import {
+  selectCurrentUser,
+  selectCurrentUserOrThrowError,
+} from 'features/users/store/selectors';
 import { IApplicationState } from 'setup/store';
 import { IUser } from 'shared/models/User';
 import { createReport, updateReport } from 'features/reports/store/actions';
@@ -32,7 +35,7 @@ const Report: React.FC<ItemProps> = ({
   activeDayValue,
 }) => {
   const currentUser = useSelector((state: IApplicationState) =>
-    selectCurrentUser(state)
+    selectCurrentUserOrThrowError(state)
   );
   const dispatch = useDispatch();
   const [isOpenEditing, setOpenedEditing] = useState<boolean>(isCreate);
@@ -58,20 +61,29 @@ const Report: React.FC<ItemProps> = ({
 
   const onSaveButtonClick = useCallback(() => {
     const totalTime = convertHsAndMsToSeconds(timeDuration);
-    if (isCreate && setOpenedCreateEditing) {
+    const createdAt = dayjs()
+      .date(activeDayValue || 0)
+      .format('YYYY-MM-DD');
+    if (isCreate && setOpenedCreateEditing && currentUser) {
       dispatch(
         createReport({
           user: currentUser,
           text: mdValue || '',
           totalTime,
-          createdAt: dayjs()
-            .date(activeDayValue || 0)
-            .format('YYYY/MM/DD'),
+          createdAt,
         })
       );
       setOpenedCreateEditing(false);
     } else {
-      dispatch(updateReport({ id: item.id, text: mdValue || '', totalTime }));
+      dispatch(
+        updateReport({
+          id: item.id,
+          text: mdValue || '',
+          totalTime,
+          createdAt,
+          user: currentUser,
+        })
+      );
       setOpenedEditing(false);
     }
   }, [

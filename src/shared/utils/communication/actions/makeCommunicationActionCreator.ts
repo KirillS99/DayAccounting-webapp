@@ -32,6 +32,7 @@ export const makeCommunicationActionCreator = <
       dispatch(actions.success(data));
     } catch (e) {
       dispatch(actions.error(e));
+      console.error(e);
     }
   };
 

@@ -47,14 +47,15 @@ export const makeCommunicationByIdActionCreator = <
       },
     })
       .then((successPayload) => dispatch(actions.success(successPayload)))
-      .catch((error) =>
+      .catch((error) => {
         dispatch(
           actions.error({
             id: payload.id,
             error: error,
           })
-        )
-      );
+        );
+        console.error(error);
+      });
   };
 
   actionCreator.success = actions.success;

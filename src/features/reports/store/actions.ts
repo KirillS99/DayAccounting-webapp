@@ -2,6 +2,7 @@ import {
   IReport,
   IServerCreateReportDto,
   ITimestampDuration,
+  IUpdateReportDto,
   UpdatedReport,
 } from 'shared/models/Report';
 import { makeCommunicationActionCreator } from 'shared/utils/communication/actions/makeCommunicationActionCreator';
@@ -12,13 +13,8 @@ export const loadReportsByDay = makeCommunicationActionCreator({
   success: '@reports/LOAD_REPORTS_BY_DAY_SUCCESS',
   error: '@reports/LOAD_REPORTS_BY_DAY_ERROR',
   reset: '@reports/LOAD_REPORTS_BY_DAY_RESET',
-})<ITimestampDuration, IReport[]>(
-  ({
-    deps: {
-      extra: { api },
-    },
-    payload: { timestampEnd, timestampStart },
-  }) => api.reports.getReportsByDay({ timestampEnd, timestampStart })
+})<string, IReport[]>(({ deps: { extra: { api } }, payload: date }) =>
+  api.reports.getReportsByDay({ date })
 );
 
 export const createReport = makeCommunicationActionCreator({
@@ -40,11 +36,11 @@ export const updateReport = makeCommunicationByIdActionCreator({
   success: '@reports/UPDATE_REPORT_SUCCESS',
   error: '@reports/UPDATE_REPORT_ERROR',
   reset: '@reports/UPDATE_REPORT_RESET',
-})<{ text: string; id: string; totalTime: number }, IReport>(
+})<IUpdateReportDto, IReport>(
   ({
     deps: {
       extra: { api },
     },
-    payload: { id, text, totalTime },
-  }) => api.reports.updateReport({ id, text, totalTime })
+    payload: { id, text, totalTime, createdAt, user },
+  }) => api.reports.updateReport({ id, text, totalTime, createdAt, user })
 );

@@ -5,6 +5,7 @@ import { connect } from 'react-redux';
 import { loginByGoogle } from 'features/auth/store/actions';
 import { selectAuthenticatingByGoogle } from 'features/auth/store/selectors';
 import { IApplicationState } from 'setup/store';
+import { Button } from '@material-ui/core';
 
 import AuthButton from './AuthButton/AuthButton';
 import styles from './Auth.module.css';
@@ -34,11 +35,11 @@ const Auth: React.FC<IProps> = ({ authenticatingByGoogle, loginByGoogle }) => {
   return (
     <div className={styles.root}>
       <div className={styles.content}>
-        <a
+        <Button
           href={`https://day-accounting.herokuapp.com/api/google?authRedirect=${location.origin}`}
         >
           Google
-        </a>
+        </Button>
       </div>
     </div>
   );

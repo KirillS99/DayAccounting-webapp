@@ -1,6 +1,7 @@
 import { BaseHttpService } from '../BaseHttpService';
 import {
   IReport,
+  IReportDate,
   IServerCreateReportDto,
   IServerReport,
   IServerReportsList,
@@ -8,7 +9,11 @@ import {
   ITimestampDuration,
   UpdatedReport,
 } from 'shared/models/Report';
-import { convertReport, convertReports } from './ReportsConverter';
+import {
+  convertCreateReport,
+  convertReport,
+  convertReports,
+} from './ReportsConverter';
 import { AccessTokenManager } from 'shared/managers/AccessTokenManager';
 
 export class ReportsService extends BaseHttpService {
@@ -20,24 +25,26 @@ export class ReportsService extends BaseHttpService {
       url: `${this.baseUrl}/api/reports/create`,
       data,
     });
-    return convertReport({ ...reports.data.report, user: data.user });
+    return convertCreateReport({
+      report: reports.data.report,
+      user: data.user,
+    });
   }
 
-  public async getReportsByDay({
-    timestampStart,
-    timestampEnd,
-  }: ITimestampDuration): Promise<IReport[]> {
+  public async getReportsByDay({ date }: IReportDate): Promise<IReport[]> {
     const reports = await this.get<IServerReportsList>({
-      url: `${this.baseUrl}/api/reports/get-reports?timestampStart=${timestampStart}&timestampEnd=${timestampEnd}`,
+      url: `${this.baseUrl}/api/reports/get-reports?date=${date}`,
     });
     return convertReports(reports.data);
   }
 
   public async updateReport(data: UpdatedReport): Promise<IReport> {
-    const report = await this.post<IServerUpdatedReport>({
+    console.log(data, 'data');
+    const res = await this.post<IServerUpdatedReport>({
       url: `${this.baseUrl}/api/reports/update/${data.id}`,
       data,
     });
-    return convertReport(report.data.report);
+
+    return convertReport({ ...res.data.report, user: data.user });
   }
 }

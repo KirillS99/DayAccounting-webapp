@@ -5,8 +5,12 @@ import 'dayjs/locale/ru';
 import styles from './CreatingReport.module.css';
 import { Button } from '@material-ui/core';
 import { shallowEqual, useDispatch, useSelector } from 'react-redux';
-import { selectCurrentUser } from 'features/users/store/selectors';
+import {
+  selectCurrentUser,
+  selectCurrentUserOrThrowError,
+} from 'features/users/store/selectors';
 import Report from '../ReportsList/Report/Report';
+import { selectReports } from 'features/reports/store/selectors';
 
 interface CreatingReportProps {
   activeDayValue: number;
@@ -14,12 +18,17 @@ interface CreatingReportProps {
 
 const CreatingReport: React.FC<CreatingReportProps> = ({ activeDayValue }) => {
   const [isOpenEditing, setOpenedEditing] = useState<boolean>(false);
-  const currentUser = useSelector(selectCurrentUser, shallowEqual);
+  const currentUser = useSelector(selectCurrentUserOrThrowError, shallowEqual);
+  const reportsLst = useSelector(selectReports, shallowEqual);
 
+  const userHasReportToday = reportsLst.some(
+    (t) => t.user.id === currentUser.id
+  );
   const onEditingButtonClick = useCallback(() => {
     setOpenedEditing((prevState) => !prevState);
   }, []);
-  return (
+
+  return !userHasReportToday ? (
     <div className={styles.root}>
       {!isOpenEditing ? (
         <div className={styles.buttonContainer}>
@@ -42,7 +51,7 @@ const CreatingReport: React.FC<CreatingReportProps> = ({ activeDayValue }) => {
         />
       )}
     </div>
-  );
+  ) : null;
 };
 
 export default CreatingReport;
