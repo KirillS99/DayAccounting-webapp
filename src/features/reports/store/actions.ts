@@ -44,3 +44,17 @@ export const updateReport = makeCommunicationByIdActionCreator({
     payload: { id, text, totalTime, createdAt, user },
   }) => api.reports.updateReport({ id, text, totalTime, createdAt, user })
 );
+
+export const deleteReport = makeCommunicationByIdActionCreator({
+  loading: '@reports/DELETE_REPORT_LOADING',
+  success: '@reports/DELETE_REPORT_SUCCESS',
+  error: '@reports/DELETE_REPORT_ERROR',
+  reset: '@reports/DELETE_REPORT_RESET',
+})<Pick<IReport, 'id'>, Pick<IReport, 'id'>>(
+  ({
+    deps: {
+      extra: { api },
+    },
+    payload: { id },
+  }) => api.reports.deleteReport({ id })
+);

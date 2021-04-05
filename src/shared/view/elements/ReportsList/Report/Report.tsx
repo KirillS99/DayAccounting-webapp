@@ -6,6 +6,8 @@ dayjs.extend(duration);
 import MDEditor from '@uiw/react-md-editor';
 import { Button, TextField } from '@material-ui/core';
 
+import DeleteForeverIcon from '@material-ui/icons/DeleteForever';
+
 import styles from './Report.module.css';
 import { IReport } from 'shared/models/Report';
 import dayjs from 'dayjs';
@@ -17,7 +19,11 @@ import {
 } from 'features/users/store/selectors';
 import { IApplicationState } from 'setup/store';
 import { IUser } from 'shared/models/User';
-import { createReport, updateReport } from 'features/reports/store/actions';
+import {
+  createReport,
+  deleteReport,
+  updateReport,
+} from 'features/reports/store/actions';
 import { convertHsAndMsToSeconds } from 'shared/helpers/convertHoursAndMinutesToSeconds';
 import { selectUpdatingReport } from 'features/reports/store/selectors';
 
@@ -45,6 +51,10 @@ const Report: React.FC<ItemProps> = ({
   const [timeDuration, setTimeDuration] = useState<string>(totalTime);
 
   const updatingReport = useSelector(selectUpdatingReport(item.id));
+
+  const onClickDelete = useCallback(() => {
+    dispatch(deleteReport({ id: item.id }));
+  }, []);
 
   const onChangeButtonClick = useCallback(() => {
     mdSetValue(item.text);
@@ -97,8 +107,16 @@ const Report: React.FC<ItemProps> = ({
     setOpenedCreateEditing,
   ]);
 
+  console.log(updatingReport);
   return (
     <div className={styles.root}>
+      {!isCreate && (
+        <div className={styles.deleteButtonWrapper}>
+          <Button onClick={onClickDelete}>
+            <DeleteForeverIcon />
+          </Button>
+        </div>
+      )}
       <div className={styles.userInfo}>
         <UserShortInfo user={item.user} reportCreatedAt={item.updatedAt} />
       </div>

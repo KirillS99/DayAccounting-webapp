@@ -10,18 +10,20 @@ dayjs.locale('ru');
 
 interface MonthlyTimeline {
   activeDayValue: number;
+  activeMonthValue: number;
   setActiveDayValue: (a: number) => void;
 }
 
 const MontlyTimeline: React.FC<MonthlyTimeline> = ({
   activeDayValue,
+  activeMonthValue,
   setActiveDayValue,
 }) => {
-  const daysInMonth = dayjs().daysInMonth();
+  const daysInMonth = dayjs().month(activeMonthValue).daysInMonth();
 
   const daysList = useMemo(
     () =>
-      createMonthlyDaysArray(daysInMonth).map((t) => (
+      createMonthlyDaysArray(daysInMonth, activeMonthValue).map((t) => (
         <Item
           key={t.value}
           item={t}
@@ -29,7 +31,7 @@ const MontlyTimeline: React.FC<MonthlyTimeline> = ({
           setActiveDayValue={setActiveDayValue}
         />
       )),
-    [daysInMonth, activeDayValue, setActiveDayValue]
+    [daysInMonth, activeDayValue, setActiveDayValue, activeMonthValue]
   );
 
   return <div className={styles.root}>{daysList}</div>;

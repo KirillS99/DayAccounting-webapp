@@ -16,7 +16,6 @@ export default createReducer<IReportsState['data'], ActionType<typeof actions>>(
     reportsList: action.payload,
   }))
   .handleAction(actions.updateReport.success, (state, action) => {
-    console.log(action, 'action');
     return {
       ...state,
       reportsList: state.reportsList.map((t: IReport) =>
@@ -27,4 +26,10 @@ export default createReducer<IReportsState['data'], ActionType<typeof actions>>(
   .handleAction(actions.createReport.success, (state, action) => ({
     ...state,
     reportsList: [action.payload, ...state.reportsList],
+  }))
+  .handleAction(actions.deleteReport.success, (state, action) => ({
+    ...state,
+    reportsList: state.reportsList.filter(
+      (t: IReport) => t.id !== action.payload.id
+    ),
   }));

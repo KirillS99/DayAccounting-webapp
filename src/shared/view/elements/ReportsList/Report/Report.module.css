@@ -3,9 +3,13 @@
   margin-bottom: 2rem;
   padding: 1.5rem;
   border-radius: 0.625rem;
+  position: relative;
 }
 
-.userInfo {
+.deleteButtonWrapper {
+  position: absolute;
+  right: 1rem;
+  top: 1rem;
 }
 
 .body {

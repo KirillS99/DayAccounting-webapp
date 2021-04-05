@@ -32,30 +32,51 @@ export const makeCommunicationByIdActionCreator = <
     ICommunicationByIdErrorPayload,
     ICommunicationByIdPayload
   >(actionTypes);
-  const actionCreator = (payload: LoadingPayload): ThunkResult => (
+  const actionCreator = (payload: LoadingPayload): ThunkResult => async (
     dispatch,
     getState,
     extra
   ) => {
-    dispatch(actions.loading(payload));
-    communicate({
-      payload,
-      deps: {
-        dispatch,
-        getState,
-        extra,
-      },
-    })
-      .then((successPayload) => dispatch(actions.success(successPayload)))
-      .catch((error) => {
-        dispatch(
-          actions.error({
-            id: payload.id,
-            error: error,
-          })
-        );
-        console.error(error);
+    try {
+      dispatch(actions.loading(payload));
+      const data = await communicate({
+        payload,
+        deps: {
+          dispatch,
+          getState,
+          extra,
+        },
       });
+      dispatch(actions.success(data));
+    } catch (e) {
+      dispatch(
+        actions.error({
+          id: payload.id,
+          error: e,
+        })
+      );
+      console.error(e);
+    }
+
+    // dispatch(actions.loading(payload));
+    // communicate({
+    //   payload,
+    //   deps: {
+    //     dispatch,
+    //     getState,
+    //     extra,
+    //   },
+    // })
+    //   .then((successPayload) => dispatch(actions.success(successPayload)))
+    //   .catch((error) => {
+    //     dispatch(
+    //       actions.error({
+    //         id: payload.id,
+    //         error: error,
+    //       })
+    //     );
+    //     console.error(error);
+    //   });
   };
 
   actionCreator.success = actions.success;

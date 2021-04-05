@@ -8,11 +8,12 @@ export interface IDayTimeLineItem {
 }
 
 export const createMonthlyDaysArray = (
-  daysAmount: number
+  daysAmount: number,
+  monthNumber: number
 ): IDayTimeLineItem[] => {
   const outputArray = [];
   for (let i = 1; i <= daysAmount; i += 1) {
-    const name = dayjs().date(i).format('dd');
+    const name = dayjs().month(monthNumber).date(i).format('dd');
     const item: IDayTimeLineItem = {
       name,
       value: i,

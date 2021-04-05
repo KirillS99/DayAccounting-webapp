@@ -39,12 +39,25 @@ export class ReportsService extends BaseHttpService {
   }
 
   public async updateReport(data: UpdatedReport): Promise<IReport> {
-    console.log(data, 'data');
     const res = await this.post<IServerUpdatedReport>({
       url: `${this.baseUrl}/api/reports/update/${data.id}`,
       data,
     });
 
     return convertReport({ ...res.data.report, user: data.user });
+  }
+
+  public async deleteReport({
+    id,
+  }: Pick<IReport, 'id'>): Promise<Pick<IReport, 'id'>> {
+    const res = await this.post<Pick<IReport, 'id'>>({
+      url: `${this.baseUrl}/api/reports/delete/${id}`,
+    });
+
+    if (res) {
+      return { id };
+    } else {
+      throw new Error(res);
+    }
   }
 }

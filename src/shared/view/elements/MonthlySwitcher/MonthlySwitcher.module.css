@@ -1,0 +1,10 @@
+.root {
+  display: flex;
+  align-items: center;
+}
+
+.currentValue {
+  text-transform: capitalize;
+  color: #4172ac;
+  margin: 0 1rem;
+}
